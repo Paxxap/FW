@@ -2,33 +2,58 @@
 
 namespace FW\core;
 
+use FW\core\Page;
+use FW\core\Config;
+
+
 class Application
 {
-   
+    use Traits\Singleton;
+
     private $__components = [];
-    private $pager =  null; // будет объект класса
-    private static $instance = null;
-    private $template = null;//будет объект класса
+    public $pager =  null; 
+    private $template = null;
 
-    protected function __construct()
+    function __construct()
     {
-
-    }
-    
-    protected function __clone() {}
-
-    public function __wakeup() // Про невосстанавливаемость  из строк
-    {
-        throw new \Exception ("Cannot unserialize a singleton");
+        $this->pager = Page::getInstance();
+        $this->template = Config::get("templates");
     }
 
-    public static function getInstance()
+    function header()
     {
-        if (null === self::$instance)
+        Application::startBuffer();
+        require_once "FW/templates/".$this->template."/header.php";
+    }
+
+    function footer()
+    {
+        require_once "FW/templates/".$this->template."/footer.php";
+        Application::endBuffer();
+    }
+
+    function startBuffer()
+    {
+        ob_start();
+    }
+
+    function endBuffer()
+    {
+        $buffer_contents = ob_get_contents();
+        $array_replace = $this->pager->getAllReplace();
+        $key = array_keys($array_replace);
+        foreach ($array_replace as $key => $value)
         {
-            self::$instance = new self();
+            $buffer_contents = str_replace($key, $value, $buffer_contents);
         }
-        return self::$instance;
+        ob_end_clean();
+        echo $buffer_contents;
+    }
+
+    function restart()
+    {
+        ob_end_clean();
+        ob_start();
     }
 }
 ?>
