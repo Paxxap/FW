@@ -1,6 +1,11 @@
 <?php 
 
-define ("CORE_DB");
+session_start();
+
+use FW\core\Application;
+
+
+define ("CORE_DB", true);
 
 spl_autoload_register (function ($class_name)
 {
@@ -12,7 +17,5 @@ spl_autoload_register (function ($class_name)
 });
 
 $application = Application::getInstance();
-
-session_start();
 
 ?>

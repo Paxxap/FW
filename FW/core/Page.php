@@ -7,36 +7,39 @@ class Page
 
     use Traits\Singleton;
 
-    private $storage_src = [];
-    private $storage_link = [];
-    private $storage_string = [];
     private $storage_additional= [];
-    private $macros = ['#FW_MACROS_SRC#', '#FW_MACROS_CSS#', '#FW_MACROS_STR#'];
+
+    private $storage = 
+    [
+        '#_FW_PAGE_JS#' => [],
+        '#_FW_PAGE_CSS#' => [],
+        '#_FW_PAGE_STR#' => []
+    ];
 
 
     function addJs(string $src)
     {
-        array_push($this->storage_src, $src);
-        array_unique($this->storage_src);
+        array_push($this->storage[$this->get_macros('JS')], "<script src=$src></script>");
+        array_unique($this->storage[$this->get_macros('JS')]);
     }
 
     function addCss(string $link)
     {
-        array_push($this->storage_link, $link);
-        array_unique($this->storage_link);
+        array_push($this->storage[$this->get_macros('CSS')], "<link rel=\"stylesheet\" href=\"$link\">");
+        array_unique($this->storage[$this->get_macros('CSS')]);
     }
 
     function addString(string $str)
     {
-        array_push($this->storage_string, $str);
-        array_unique($this->storage_str);
+        array_push($this->storage[$this->get_macros('STR')], $str);
+        array_unique($this->storage[$this->get_macros('STR')]);
     }
 
-    function setProperty(string $id, mixed $value)
+    function setProperty(string $id, $value)
     {
         if(in_array($value, $this->storage_additional) == false)
         {
-            $this->storage_additional[$id] = $value;
+            $this->storage_additional[$this->create_prop_macros($id)] = $value;
         }
     }
 
@@ -51,30 +54,58 @@ class Page
         }
     }
 
-    function ShowProperty(string $id)
+    function showProperty(string $id)
     {
-        $value = '#FW_PAGE_PROPERTY_{'.$id.'}#';
+        $value = $this->create_prop_macros($id);
         echo $value;
-        array_push($this->property_macros, $value);
     }
 
     function getAllReplace()
     {
-        $default_macros = [$this->macros[0] => $this->storage_src, $this->macros[1] => $this->storage_link, 
-        $this->macros[2] => $this->storage_str ];
-
-
-
-        
-        
+        $this->storage[$this->get_macros('JS')] = 
+            implode("\n", $this->storage[$this->get_macros('JS')]);
+        $this->storage[$this->get_macros('CSS')] = 
+            implode("\n", $this->storage[$this->get_macros('CSS')]);
+        $this->storage[$this->get_macros('STR')] = 
+            implode("\n", $this->storage[$this->get_macros('STR')]);
+        foreach($this->storage_additional as $key => $value)
+        {
+            $this->storage[$key] = $value;
+        }
+        return $this->storage;
     }
 
     function showHead()
     {
-       foreach($this->macros as $value)
+        // возможно сделать красивее
+       $num = 0;
+       foreach($this->storage as $key => $value)
        {
-           echo $value."\n";
+           $num++;
+           echo $key."\n";
+           if ($num == 3){
+               break;
+           }
        }
+    }
+
+    function create_prop_macros($string)
+    {
+        $new_macros = '#FW_PAGE_PROPERTY_'.$string.'#';
+        return $new_macros;
+    }
+
+    function get_macros($value)
+    {
+        switch($value)
+        {
+            case "JS": 
+                return '#_FW_PAGE_JS#';
+            case "CSS": 
+                return '#_FW_PAGE_CSS#';
+            case "STR":
+                return '#_FW_PAGE_STR#';
+        }
     }
 }
 

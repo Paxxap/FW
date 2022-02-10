@@ -7,7 +7,7 @@ trait Singleton
     private static $instance;
 
 
-    public function getInstance()
+    public static function getInstance()
     {
         if (self::$instance === null)
         {

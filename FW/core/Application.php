@@ -3,7 +3,7 @@
 namespace FW\core;
 
 use FW\core\Page;
-
+use FW\core\Config;
 
 
 class Application
@@ -11,40 +11,46 @@ class Application
     use Traits\Singleton;
 
     private $__components = [];
-    private $pager =  null; // будет объект класса
-    private $template = null;//будет объект класса
+    public $pager =  null; 
+    private $template = null;
 
     function __construct()
     {
         $this->pager = Page::getInstance();
-        $this->template = Config::get('template_1');
+        $this->template = Config::get("templates");
     }
 
-    static function header()
+    function header()
     {
-        include ("FW/templates/$this->template/header.php");
         Application::startBuffer();
+        require_once "FW/templates/".$this->template."/header.php";
     }
 
-    static function footer()
+    function footer()
     {
-        include ("FW/templates/$this->template/footer.php")
+        require_once "FW/templates/".$this->template."/footer.php";
         Application::endBuffer();
     }
 
-    static function startBuffer()
+    function startBuffer()
     {
         ob_start();
     }
 
-    static function endBuffer()
+    function endBuffer()
     {
         $buffer_contents = ob_get_contents();
         $array_replace = $this->pager->getAllReplace();
-        
+        $key = array_keys($array_replace);
+        foreach ($array_replace as $key => $value)
+        {
+            $buffer_contents = str_replace($key, $value, $buffer_contents);
+        }
+        ob_end_clean();
+        echo $buffer_contents;
     }
 
-    static function restart()
+    function restart()
     {
         ob_end_clean();
         ob_start();
