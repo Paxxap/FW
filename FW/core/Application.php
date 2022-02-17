@@ -1,23 +1,27 @@
-<?php 
+<?php
 
 namespace FW\core;
 
 use FW\core\Page;
 use FW\core\Config;
-
+use FW\core\Type\Dictionary;
 
 class Application
 {
     use Traits\Singleton;
 
     private $__components = [];
-    public $pager =  null; 
+    public $pager =  null;
     private $template = null;
+    private $server;
+    private $request;
 
     function __construct()
     {
         $this->pager = Page::getInstance();
         $this->template = Config::get("templates");
+        $this->server = new Server();
+        $this->request = new Request();
     }
 
     function header()
@@ -50,6 +54,33 @@ class Application
     {
         ob_end_clean();
         ob_start();
+    }
+
+    function GetRequest()
+    {
+      return $this->request;
+    }
+
+    function GetServer()
+    {
+      return $this->server;
+    }
+
+    function includeComponent($component, $template, $params)
+    {
+      $componentArr = explode("/", $component);
+      $componentId = $componentArr[1];
+      $this->__components = get_declared_classes();
+      $flagPresence = 0;
+      foreach($this->__components as $class)
+      {
+        if ($class == $componentId)
+        {
+          $flagPresence = true;
+        }
+      }
+      include("FW/components/".$component."/templates/.class.php");
+      $instance = new $componentId($componentId, $template, $params);
     }
 }
 ?>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 require_once("FW\init.php");
 
@@ -6,14 +6,30 @@ $application->pager->addJs("/scripts/script1.js");
 $application->pager->addJs("/scripts/script2.js");
 
 $application->pager->addCss("/css/style1.css");
-$application->pager->setProperty("Title", "title in my site"); 
+$application->pager->setProperty("Title", "title in my site");
 
 $application->header();
 $application->footer();
 
+$application->includeComponent(
+  "Transfer/RubUsd",
+  "default",
+  [
+    "count" = 12,
+    "type" = "U"
+  ]
+);
+
 ?>
 
-<pre> 
+<pre>
+
+
+
+
+
+
+
 --------01.02.2022 - 03.02.2022------------
 1) Создание класса Page, добавление инициализации Page в конструктор Application
 2) Тестирование работы программы на произвольном примере
