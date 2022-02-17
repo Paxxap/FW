@@ -1,19 +1,38 @@
 <?php
-namespace FW\components\Transfer\RubUsd;
+//namespace FW\components\Transfer\RubUsd;
 
 use FW\core\Component\Base;
 
 class RubUsd extends Base
 {
 
-  function __construct($template, $params)
+  function __construct($componentId, $template, $params)
   {
-    
+    $component__path = __DIR__;
+    $this->params = $params;
+    parent::__construct($componentId, $template, $component__path);
   }
 
   function  executeComponent()
   {
-
+    switch ($this->params["type"])
+    {
+      case "U" :
+        $this->result =
+        [
+          "message" => "В RUB: ",
+          "count" => round($this->params["count"] * 75.68, 2)
+        ];
+        break;
+      case "R" :
+        $this->result =
+        [
+          "message" => "В USD: ",
+          "count" => round($this->params["count"] / 75.68, 2)
+        ];
+        break;
+    }
+    $this->template->render();
   }
 
 }

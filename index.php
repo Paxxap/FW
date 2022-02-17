@@ -15,8 +15,8 @@ $application->includeComponent(
   "Transfer/RubUsd",
   "default",
   [
-    "count" = 12,
-    "type" = "U"
+    "count" => 12,
+    "type" => "U"
   ]
 );
 

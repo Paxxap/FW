@@ -79,8 +79,9 @@ class Application
           $flagPresence = true;
         }
       }
-      include("FW/components/".$component."/templates/.class.php");
+      include ("FW/components/".$component."/.class.php");
       $instance = new $componentId($componentId, $template, $params);
+      $instance->executeComponent();
     }
 }
 ?>

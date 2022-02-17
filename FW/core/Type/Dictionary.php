@@ -11,7 +11,7 @@ class Dictionary implements IteratorAggregate, ArrayAccess, Countable
     private $container = array();
     private $server;
     private $request;
-    
+
     public function __construct()
     {
 
@@ -23,17 +23,17 @@ class Dictionary implements IteratorAggregate, ArrayAccess, Countable
         return new ArrayIterator($this);
     }
     /// ArrayAccess
-    public function offsetExists(mixed $offset): bool
+    public function offsetExists($offset): bool
     {
         return isset($this->container[$offset]);
     }
 
-    public function offsetGet(mixed $offset): mixed
+    public function offsetGet($offset): mixed
     {
         return isset ($this->container[$offset]) ? $this->container[$offset] : null;
     }
 
-    public function offsetSet(mixed $offset, mixed $value)
+    public function offsetSet( $offset, $value)
     {
         if (is_null($offset))
         {
@@ -45,7 +45,7 @@ class Dictionary implements IteratorAggregate, ArrayAccess, Countable
         }
     }
 
-    public function offsetUnset(mixed $offset)
+    public function offsetUnset($offset)
     {
         unset($this->container[$offset]);
     }

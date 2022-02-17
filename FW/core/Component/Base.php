@@ -2,6 +2,8 @@
 
 namespace FW\core\Component;
 
+use FW\core\Component\Template;
+
 abstract class Base
 {
     public $result = array();
@@ -13,9 +15,11 @@ abstract class Base
 
     abstract protected function executeComponent();
 
-    function __construct()
+    function __construct($id, $template, $path)
     {
-      
+      $this->id = $id;
+      $this->__path = $path;
+      $this->template = new Template($id, $template, $path, $params, $result);
     }
 
 
