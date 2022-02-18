@@ -45,6 +45,14 @@ class Application
     {
         $buffer_contents = ob_get_contents();
         $array_replace = $this->pager->getAllReplace();
+
+        $array_replace['#_FW_PAGE_JS#'] =
+          implode("\n", $array_replace['#_FW_PAGE_JS#']);
+        $array_replace['#_FW_PAGE_CSS#'] =
+          implode("\n", $array_replace['#_FW_PAGE_CSS#']);
+        $array_replace['#_FW_PAGE_STR#'] =
+          implode("\n", $array_replace['#_FW_PAGE_STR#']);
+
         $buffer_contents = str_replace(array_keys($array_replace), $array_replace, $buffer_contents);
         ob_end_clean();
         echo $buffer_contents;

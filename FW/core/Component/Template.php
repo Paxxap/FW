@@ -6,54 +6,59 @@ use FW\core\Page;
 
 class Template
 {
+    public $componentArr;
     public $__path;
     public $__relativePath;
     public $id;
 
-    public $params;
-    public $result;
 
-    function __construct($id, $template, $path, $params, $result)
+    function __construct($template, $objArr)
     {
-      $this->__path = $path."/".$template."/";
-      $this->__relativePath = $this->__path; /// посмотреть когда заработает
-      $this->id = $id;
+      $this->componentArr = $objArr;
 
-      $this->params = $params;
-      $this->result = $result;
+      $this->__path = $this->componentArr->__path."\\templates\\".$template."\\";
+      $this->__relativePath = $this->createUrl($this->__path);
+      $this->id = $template;
+
     }
 
     public function render()
     {
-      echo $this->__path;
+
       $this->fileConnection("result_modifier.php");
       $this->fileConnection("template.php");
       $this->fileConnection("component_epilog.php");
 
       $page = Page::getInstance();
 
-      if (file_exists($this->__path."style.css"))
+
+      $styleTemplate = $this->__relativePath."style.css";
+      $scriptTemplate = $this->__relativePath."script.js";
+      if (file_exists($styleTemplate))
       {
-        //$page->addCss();
+        $page->addCss($styleTemplate);
       }
 
-      if (file_exists($this->__path."script.js"))
+      if (file_exists($scriptTemplate))
       {
-        //$page->addJs();
+        $page->addJs($scriptTemplate);
       }
 
     }
 
     public function fileConnection($file)
     {
-      if(file_exists($this->__path.$file))
+      $way = $this->__path.$file;
+      if(file_exists($way))
       {
-        include ($this->__path.$file);
-        if (include ($this->__path.$file))
-        {
-          echo "я нашел";
-        }
+        include ($way);
       }
+    }
+
+    public function createURL ($path)
+    {
+      $urlPath = strstr($path, "FW");
+      return $urlPath;
     }
 }
 ?>

@@ -19,7 +19,7 @@ abstract class Base
     {
       $this->id = $id;
       $this->__path = $path;
-      $this->template = new Template($id, $template, $path, $params, $result);
+      $this->template = new Template($template, $this);
     }
 
 

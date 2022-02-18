@@ -8,9 +8,6 @@ $application->pager->addJs("/scripts/script2.js");
 $application->pager->addCss("/css/style1.css");
 $application->pager->setProperty("Title", "title in my site");
 
-$application->header();
-$application->footer();
-
 $application->includeComponent(
   "Transfer/RubUsd",
   "default",
@@ -19,6 +16,9 @@ $application->includeComponent(
     "type" => "U"
   ]
 );
+
+$application->header();
+$application->footer();
 
 ?>
 

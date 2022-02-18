@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace FW\core;
 
@@ -9,11 +9,11 @@ class Page
 
     private $storage_additional= [];
 
-    private $storage = 
+    private $storage =
     [
-        '#_FW_PAGE_JS#' => [],
-        '#_FW_PAGE_CSS#' => [],
-        '#_FW_PAGE_STR#' => []
+        '#_FW_PAGE_JS#' => array(),
+        '#_FW_PAGE_CSS#' => array(),
+        '#_FW_PAGE_STR#' => array()
     ];
 
 
@@ -62,22 +62,16 @@ class Page
 
     function getAllReplace()
     {
-        $this->storage[$this->getMacros('JS')] = 
-            implode("\n", $this->storage[$this->getMacros('JS')]);
-        $this->storage[$this->getMacros('CSS')] = 
-            implode("\n", $this->storage[$this->getMacros('CSS')]);
-        $this->storage[$this->getMacros('STR')] = 
-            implode("\n", $this->storage[$this->getMacros('STR')]);
         foreach($this->storage_additional as $key => $value)
         {
             $this->storage[$key] = $value;
         }
+
         return $this->storage;
     }
 
     function showHead()
     {
-        // возможно сделать красивее
        $num = 0;
        foreach($this->storage as $key => $value)
        {
@@ -99,9 +93,9 @@ class Page
     {
         switch($value)
         {
-            case "JS": 
+            case "JS":
                 return '#_FW_PAGE_JS#';
-            case "CSS": 
+            case "CSS":
                 return '#_FW_PAGE_CSS#';
             case "STR":
                 return '#_FW_PAGE_STR#';
