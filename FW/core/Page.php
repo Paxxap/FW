@@ -62,12 +62,13 @@ class Page
 
     function getAllReplace()
     {
+        $newstorage = $this->chekEmpty($this->storage);
         foreach($this->storage_additional as $key => $value)
         {
-            $this->storage[$key] = $value;
+            $newstorage[$key] = $value;
         }
 
-        return $this->storage;
+        return $newstorage;
     }
 
     function showHead()
@@ -100,6 +101,18 @@ class Page
             case "STR":
                 return '#_FW_PAGE_STR#';
         }
+    }
+
+    function chekEmpty ($macrosArr)
+    {
+      foreach ($macrosArr as $key => $value)
+      {
+        if (empty($value))
+        {
+          $value = "";
+        }
+      }
+      return $macrosArr;
     }
 }
 

@@ -17,6 +17,15 @@ $application->includeComponent(
   ]
 );
 
+$application->includeComponent(
+  "Transfer/RubUsd",
+  "default",
+  [
+    "count" => 120,
+    "type" => "R"
+  ]
+);
+
 $application->header();
 $application->footer();
 

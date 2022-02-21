@@ -79,16 +79,29 @@ class Application
       $componentArr = explode("/", $component);
       $componentId = $componentArr[1];
       $this->__components = get_declared_classes();
-      $flagPresence = 0;
+      $presenceFlag = false;
       foreach($this->__components as $class)
       {
-        if ($class == $componentId)
+        $classStr = explode("\\", $class);
+        foreach ($classStr as $value)
         {
-          $flagPresence = true;
+          if ($value == $componentId)
+          {
+            $presenceFlag = true;
+            break;
+          }
         }
+        if ($presenceFlag) break;
       }
-      include ("FW/components/".$component."/.class.php");
-      $instance = new $componentId($componentId, $template, $params);
+      if ($presenceFlag)
+      {
+        $instance = new $componentId($componentId, $template, $params);
+      }
+      else
+      {
+        include ("FW/components/".$component."/.class.php");
+        $instance = new $componentId($componentId, $template, $params);
+      }
       $instance->executeComponent();
     }
 }

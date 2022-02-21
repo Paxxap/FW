@@ -1,5 +1,4 @@
 <?php
-//namespace FW\components\Transfer\RubUsd;
 
 use FW\core\Component\Base;
 

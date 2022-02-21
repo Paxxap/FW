@@ -31,9 +31,9 @@ class Template
 
       $page = Page::getInstance();
 
-
       $styleTemplate = $this->__relativePath."style.css";
       $scriptTemplate = $this->__relativePath."script.js";
+      
       if (file_exists($styleTemplate))
       {
         $page->addCss($styleTemplate);
