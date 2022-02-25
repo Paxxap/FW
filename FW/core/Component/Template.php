@@ -12,9 +12,9 @@ class Template
     public $id;
 
 
-    function __construct($template, $objArr)
+    function __construct($template, $component)
     {
-      $this->componentArr = $objArr;
+      $this->componentArr = $component;
 
       $this->__path = $this->componentArr->__path."\\templates\\".$template."\\";
       $this->__relativePath = $this->createUrl($this->__path);
@@ -33,7 +33,7 @@ class Template
 
       $styleTemplate = $this->__relativePath."style.css";
       $scriptTemplate = $this->__relativePath."script.js";
-      
+
       if (file_exists($styleTemplate))
       {
         $page->addCss($styleTemplate);

@@ -78,31 +78,42 @@ class Application
     {
       $componentArr = explode("/", $component);
       $componentId = $componentArr[1];
-      $this->__components = get_declared_classes();
-      $presenceFlag = false;
-      foreach($this->__components as $class)
+
+      $firstClassList = get_declared_classes();
+      $connectWay = "FW/components/".$component."/.class.php";
+      $parentClassWay = 'FW\core\Component\Base';
+
+      if (isset($this->__components[$componentId]) == false)
       {
-        $classStr = explode("\\", $class);
-        foreach ($classStr as $value)
+        try
         {
-          if ($value == $componentId)
+          include $connectWay;
+        }
+        catch (Exception $e)
+        {
+          echo "По заданному пути: $connectWay файл не найден", $e->getMessage();
+        }
+        $secondClassList = get_declared_classes();
+        $difference = array_diff($secondClassList, $firstClassList);
+        if ($difference != [])
+        {
+        foreach ($difference as $componentDiff)
           {
-            $presenceFlag = true;
-            break;
+            if (get_parent_class($componentDiff) == $parentClassWay)
+            {
+              $this->__components[$componentId] = $componentDiff;
+              break;
+            }
           }
         }
-        if ($presenceFlag) break;
       }
-      if ($presenceFlag)
-      {
-        $instance = new $componentId($componentId, $template, $params);
-      }
-      else
-      {
-        include ("FW/components/".$component."/.class.php");
-        $instance = new $componentId($componentId, $template, $params);
-      }
-      $instance->executeComponent();
+
+    if (get_parent_class($this->__components[$componentId]) == $parentClassWay)
+    {
+      $className = $this->__components[$componentId];
     }
+    $component = new $className($componentId, $template, $params);
+    $component->executeComponent();
+  }
 }
 ?>
