@@ -8,8 +8,10 @@ $application->pager->addJs("/scripts/script2.js");
 $application->pager->addCss("/css/style1.css");
 $application->pager->setProperty("Title", "title in my site");
 
+$application->header();
+
 $application->includeComponent(
-  "Transfer/RubUsd",
+  "Transfer:RubUsd",
   "default",
   [
     "count" => 12,
@@ -18,7 +20,7 @@ $application->includeComponent(
 );
 
 $application->includeComponent(
-  "Transfer/RubUsd",
+  "Transfer:RubUsd",
   "default",
   [
     "count" => 120,
@@ -26,7 +28,7 @@ $application->includeComponent(
   ]
 );
 
-$application->header();
+
 $application->footer();
 
 ?>

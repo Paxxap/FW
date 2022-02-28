@@ -11,14 +11,16 @@ abstract class Base
     public $params = array();
     public $template;
     public $__path;
+    public $partWay;
 
 
     abstract protected function executeComponent();
 
-    function __construct($id, $template, $path)
+    function __construct($id, $template, $path, $partWay)
     {
       $this->id = $id;
       $this->__path = $path;
+      $this->partWay = $partWay;
       $this->template = new Template($template, $this);
     }
 

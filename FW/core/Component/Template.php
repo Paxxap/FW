@@ -6,7 +6,7 @@ use FW\core\Page;
 
 class Template
 {
-    public $componentArr;
+    public $component;
     public $__path;
     public $__relativePath;
     public $id;
@@ -14,19 +14,18 @@ class Template
 
     function __construct($template, $component)
     {
-      $this->componentArr = $component;
-
-      $this->__path = $this->componentArr->__path."\\templates\\".$template."\\";
-      $this->__relativePath = $this->createUrl($this->__path);
+      $this->component = $component;
+      $this->__path = $this->component->__path."\\templates\\".$template."\\";
+      $this->__relativePath = "FW\components\\".$this->component->partWay."\\templates\\".$template."\\";
       $this->id = $template;
 
     }
 
-    public function render()
+    public function render($page = "template")
     {
 
       $this->fileConnection("result_modifier.php");
-      $this->fileConnection("template.php");
+      $this->fileConnection("$page.php");
       $this->fileConnection("component_epilog.php");
 
       $page = Page::getInstance();
@@ -34,12 +33,12 @@ class Template
       $styleTemplate = $this->__relativePath."style.css";
       $scriptTemplate = $this->__relativePath."script.js";
 
-      if (file_exists($styleTemplate))
+      if (file_exists($this->__path."style.css"))
       {
         $page->addCss($styleTemplate);
       }
 
-      if (file_exists($scriptTemplate))
+      if (file_exists($this->__path."script.js"))
       {
         $page->addJs($scriptTemplate);
       }
@@ -48,17 +47,13 @@ class Template
 
     public function fileConnection($file)
     {
+      $result = $this->component->result;
+      $params = $this->component->params;
       $way = $this->__path.$file;
       if(file_exists($way))
       {
         include ($way);
       }
-    }
-
-    public function createURL ($path)
-    {
-      $urlPath = strstr($path, "FW");
-      return $urlPath;
     }
 }
 ?>
