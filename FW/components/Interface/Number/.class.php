@@ -1,4 +1,5 @@
 <?php
+//namespace FW\components\Interface\Number;
 
 use FW\core\Component\Base;
 

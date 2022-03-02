@@ -1,9 +1,9 @@
 <?php
-//namespace FW\components\Interface\Radio;
+//namespace FW\components\Interface\Select;
 
 use FW\core\Component\Base;
 
-class Radio extends Base
+class SelectMultiple extends Base
 {
 
   function __construct($componentId, $template, $params, $partWay)
@@ -15,8 +15,6 @@ class Radio extends Base
 
   function  executeComponent()
   {
-
-
     $this->template->render();
   }
 

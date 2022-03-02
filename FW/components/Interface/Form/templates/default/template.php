@@ -3,30 +3,55 @@ use FW\core\Application;
 $application = Application::getInstance();
 ?>
 
-<div class="container" <? foreach ($params["attr"] as $key => $value) {echo "$key=$value";}?>>
+<div class="container" <?if (array_key_exists("attr", $params))
+{
+ foreach ($params["attr"] as $key => $value) {echo "$key=$value";}
+}
+ ?>>
  <form class=<?=$params["additional_class"];?> action=<?= $params["action"]; ?> method=<?= $params["method"];?>>
    <div class="stripes-block">
 	<?
 		$elements = $params["elements"];
 		foreach($elements as $value)
     {
-      foreach($value as $key => $element)
+      foreach($value as $key => $atribute)
       {
         if ($key == "type")
         {
-        switch($element)
+        switch($atribute)
           {
           case "text":
-            $application->includeComponent("Interface:Text", "default", $value);
+            if (array_key_exists("multiple", $value))
+            {
+              $application->includeComponent("Interface:TextMultiple", "default", $value);
+            }
+            else
+            {
+              $application->includeComponent("Interface:Text", "default", $value);
+            }
             break;
           case "password":
             $application->includeComponent("Interface:Password", "default", $value);
             break;
           case "select":
-            $application->includeComponent("Interface:Select", "default", $value);
+            if (array_key_exists("multiple", $value))
+            {
+              $application->includeComponent("Interface:SelectMultiple", "default", $value);
+            }
+            else
+            {
+              $application->includeComponent("Interface:Select", "default", $value);
+            }
             break;
           case "checkbox":
-            $application->includeComponent("Interface:Checkbox", "default", $value);
+            if (array_key_exists("multiple", $value))
+            {
+              $application->includeComponent("Interface:CheckboxMultiple", "default", $value);
+            }
+            else
+            {
+              $application->includeComponent("Interface:Checkbox", "default", $value);
+            }
             break;
           case "textarea":
             $application->includeComponent("Interface:Textarea", "default", $value);

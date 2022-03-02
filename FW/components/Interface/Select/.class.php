@@ -1,4 +1,5 @@
 <?php
+//namespace FW\components\Interface\Select;
 
 use FW\core\Component\Base;
 
@@ -14,8 +15,6 @@ class Select extends Base
 
   function  executeComponent()
   {
-
-
     $this->template->render();
   }
 

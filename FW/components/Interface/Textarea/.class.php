@@ -1,4 +1,5 @@
 <?php
+//namespace FW\components\Interface\Textarea;
 
 use FW\core\Component\Base;
 

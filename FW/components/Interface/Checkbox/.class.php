@@ -1,4 +1,5 @@
 <?php
+//namespace FW\components\Interface\Checkbox;
 
 use FW\core\Component\Base;
 

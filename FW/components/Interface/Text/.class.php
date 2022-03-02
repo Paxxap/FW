@@ -1,9 +1,11 @@
 <?php
+//namespace FW\components\Interface\Text;
 
 use FW\core\Component\Base;
 
 class Text extends Base
 {
+  private $multTemplate;
 
   function __construct($componentId, $template, $params, $partWay)
   {
@@ -14,9 +16,7 @@ class Text extends Base
 
   function  executeComponent()
   {
-
-
-    $this->template->render();
+      $this->template->render();
   }
 
 }
