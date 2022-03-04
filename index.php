@@ -21,7 +21,7 @@ $application->includeComponent(
 ); */
 
 $application->includeComponent(
-  "Interface:Form",
+  "Interfaces:Form",
   "default",
   [
     'additional_class' => 'window--full-form', //доп класс на контейнер формы
@@ -33,6 +33,14 @@ $application->includeComponent(
     'action' => '#', //url отправки
     'elements' =>
     [ //список элементов формы
+      [
+        'type' => 'text',
+        'name' => 'accaunt',
+        'default' => 'Введите профиль',
+        'additional_class' => 'js-login',
+        'title' => 'Ссылка на профиль',
+        'multiple'
+      ],
       [
         'type' => 'text',
         'name' => 'login',
@@ -80,6 +88,7 @@ $application->includeComponent(
         'type' => 'checkbox',
         'name' => 'login',
         'additional_class' => 'js-login',
+        'value' => 'login',
         'attr' =>
         [
           'data-id' => '17'
@@ -90,6 +99,27 @@ $application->includeComponent(
         'type' => 'tel',
         'name' => 'number',
         'title' => 'Номер телефона'
+      ],
+      [
+        'type' => 'checkbox',
+        'name' => 'property',
+        'additional_class' => 'js-login',
+        'title' => 'Имущество',
+        'attr' =>
+        [
+          'data-id' => '17'
+        ],
+        'list' =>
+        [
+          [
+            'value' => 'car',
+            'title' => 'Машина'
+          ],
+          [
+            'value' => 'bike',
+            'title' => 'Мотоцикл'
+          ]
+        ]
       ]
     ]
   ]
