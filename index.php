@@ -10,15 +10,6 @@ $application->pager->addJs("https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js
 
 $application->header();
 
-/*
-$application->includeComponent(
-  "Transfer:RubUsd",
-  "default",
-  [
-    "count" => 120,
-    "type" => "R"
-  ]
-); */
 
 $application->includeComponent(
   "Interfaces:Form",
