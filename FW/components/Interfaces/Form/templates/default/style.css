@@ -1,0 +1,31 @@
+.container {
+  margin-top: 10%;
+  text-align: left;
+}
+P {
+  text-align: left;
+  font-family: 'Comic Sans MS', sans-serif;
+  margin-bottom: 10px;
+}
+.window--full-form{
+  max-width: 350px;
+    margin: 50px auto 0;
+    padding: 20px;
+    background: #fffdee;
+    border: 10px solid transparent;
+    border-image: 10 repeating-linear-gradient(135deg, #C42061, #C42061 10px, transparent 10px, transparent 20px, #FBCFDF 20px, #FBCFDF 30px, transparent 30px, transparent 40px);
+    font-family: 'Comic Sans MS';
+    color: #605756;
+}
+.stripes-block{
+  position: relative;
+    padding: 15px;
+    margin-bottom: 20px;
+  }
+.butt {
+  background: #FBCFDF;
+  border: none;
+  color: black;
+  font-family: 'Comic Sans MS';
+  margin-top: 10px;
+}
